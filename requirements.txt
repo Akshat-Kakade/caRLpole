@@ -1,0 +1,7 @@
+gymnasium[classic-control]>=1.4
+numpy>=2.0
+matplotlib>=3.9
+pygame-ce>=2.5
+# torch: for the CPU-only build (way smaller) install it with
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.5
