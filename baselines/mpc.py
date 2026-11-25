@@ -11,8 +11,9 @@ Every single step:
 The big difference from RL: MPC is handed the exact model of the world.
 RL has to figure everything out from just rewards.
 
-usage: python mpc.py                 (100 episodes headless, prints scores)
-       python mpc.py --render -n 3   (watch it)
+usage (from the repo root):
+       python -m baselines.mpc                 (100 episodes headless, prints scores)
+       python -m baselines.mpc --render -n 3   (watch it)
 """
 
 import argparse
@@ -37,8 +38,12 @@ X_LIMIT, THETA_LIMIT = 2.4, 12 * 2 * np.pi / 360
 def model_step(state, action):
     """CartPole physics, works on a whole batch of states at once.
     state is shape (4, n), action is shape (n,) of 0s and 1s."""
+    return physics_step(state, np.where(action == 1, FORCE, -FORCE))
+
+
+def physics_step(state, force):
+    """same thing but takes the force directly (interactive.py uses this so force can be 0)."""
     x, x_dot, theta, theta_dot = state
-    force = np.where(action == 1, FORCE, -FORCE)
     cos, sin = np.cos(theta), np.sin(theta)
 
     temp = (force + POLEMASS_LEN * theta_dot**2 * sin) / TOTAL_MASS

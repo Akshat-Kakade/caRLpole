@@ -7,8 +7,9 @@ Two loops added together:
 CartPole only lets me push full left or full right, so I just take the sign
 of the control signal (bang-bang control).
 
-usage: python pid.py                 (100 episodes headless, prints scores)
-       python pid.py --render -n 3   (watch it)
+usage (from the repo root):
+       python -m baselines.pid                 (100 episodes headless, prints scores)
+       python -m baselines.pid --render -n 3   (watch it)
 """
 
 import argparse

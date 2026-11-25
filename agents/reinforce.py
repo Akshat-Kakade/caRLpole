@@ -5,6 +5,8 @@ reward more likely and the ones that didn't less likely. Repeat until the
 pole stays up.
 """
 
+from pathlib import Path
+
 import gymnasium as gym
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,6 +20,10 @@ MAX_EPISODES = 2000
 SOLVED_SCORE = 475    # CartPole-v1 counts as solved at avg 475 over 100 episodes
 SEED = 0
 WATCH_AFTER = True    # pop up a window at the end to watch the trained agent
+
+ROOT = Path(__file__).resolve().parents[1]
+MODEL_PATH = ROOT / "models" / "reinforce_policy.pt"
+PLOT_PATH = ROOT / "results" / "reinforce_rewards.png"
 
 
 class Policy(nn.Module):
@@ -113,14 +119,15 @@ def train():
     return policy, episode_rewards
 
 
-def plot(episode_rewards, path="reinforce_rewards.png"):
+def plot(episode_rewards, path=PLOT_PATH):
     rewards = np.array(episode_rewards)
     window = 50
     moving_avg = np.convolve(rewards, np.ones(window) / window, mode="valid")
 
     plt.figure(figsize=(9, 4.5))
     plt.plot(rewards, alpha=0.3, label="episode reward")
-    plt.plot(np.arange(window - 1, len(rewards)), moving_avg, label=f"{window}-ep moving avg")
+    if len(rewards) >= window:  # otherwise there's nothing to average yet
+        plt.plot(np.arange(window - 1, len(rewards)), moving_avg, label=f"{window}-ep moving avg")
     plt.axhline(SOLVED_SCORE, linestyle="--", color="gray", linewidth=1, label="solved")
     plt.xlabel("episode")
     plt.ylabel("total reward")
@@ -148,7 +155,9 @@ def watch(policy, episodes=3):
 
 if __name__ == "__main__":
     policy, episode_rewards = train()
-    torch.save(policy.state_dict(), "reinforce_policy.pt")
+    MODEL_PATH.parent.mkdir(exist_ok=True)
+    torch.save(policy.state_dict(), MODEL_PATH)
+    PLOT_PATH.parent.mkdir(exist_ok=True)
     plot(episode_rewards)
     if WATCH_AFTER:
         watch(policy)
