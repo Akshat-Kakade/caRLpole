@@ -7,7 +7,7 @@ thats what my real agents will have to beat.
 
 import gymnasium as gym
 
-NUM_EPISODES = 5
+NUM_EPISODES = 10
 
 # The environment. render_mode=None to run without a window (much faster).
 env = gym.make("CartPole-v1", render_mode="human")
