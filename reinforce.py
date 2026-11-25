@@ -13,7 +13,7 @@ import torch.nn as nn
 from torch.distributions import Categorical
 
 GAMMA = 0.99          # discount factor, how much I care about future reward
-LR = 1e-2             # learning rate for the optimiser
+LR = 5e-3             # learning rate for the optimiser (had 1e-2 before)
 MAX_EPISODES = 2000
 SOLVED_SCORE = 475    # CartPole-v1 counts as solved at avg 475 over 100 episodes
 SEED = 0
