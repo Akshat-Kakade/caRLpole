@@ -17,7 +17,7 @@
 
 ---
 
-I'm learning reinforcement learning from scratch, on a ThinkPad with no GPU. CartPole-v1 is the classic first problem, so I'm solving it a few different ways and comparing them: hand-tuned control (PID, MPC) next to RL agents that only ever see the reward.
+I'm playing around with reinforcement learning, on a laptop with no GPU. CartPole-v1 is the classic first problem, so I'm solving it a few different ways and comparing them: hand-tuned control (PID, MPC) next to RL agents that only ever see the reward.
 
 There's also an interactive mode where you can grab the pole or the cart with the mouse and see which controller survives what.
 
